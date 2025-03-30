@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  target:
+    build:
+      context: ./target
+    container_name: target
+    networks:
+      - shared_net
+    ports:
+      - "4000:4000"
+
+  attacker:
+    build:
+      context: ./attacker
+    container_name: attacker
+    networks:
+      - shared_net
+
+networks:
+  shared_net:
+    driver: bridge

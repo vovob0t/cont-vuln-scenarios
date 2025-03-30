@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  escape:
+    build: .
+    # Монтирование Docker-сокета хоста – это основная уязвимость!
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"

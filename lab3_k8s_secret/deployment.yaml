@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-app
+  namespace: app-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-app
+  template:
+    metadata:
+      labels:
+        app: api-app
+    spec:
+      # Используем дефолтный ServiceAccount, который позже получит избыточные права
+      serviceAccountName: default
+      containers:
+      - name: api-container
+        image: python:3.9-slim
+        # Простая команда, которая выводит пароль из секрета (подставляется через ENV)
+        command: ["python", "-c", "import os; print('DB_PASS:', os.environ.get('DB_PASS', 'Not Set')); import time; time.sleep(3600)"]
+        env:
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
