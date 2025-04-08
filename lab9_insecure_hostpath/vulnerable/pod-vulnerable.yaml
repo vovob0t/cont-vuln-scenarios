@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sensitive-pod
+  labels:
+    app: sensitive
+spec:
+  containers:
+  - name: sensitive-container
+    image: alpine:3.16
+    command: ["sh", "-c", "sleep 3600"]
+    volumeMounts:
+    - name: host-etc
+      mountPath: /host-etc
+  volumes:
+  - name: host-etc
+    # Монтируется критическая директория хоста (например, /etc) в pod
+    hostPath:
+      path: /etc
+      type: Directory

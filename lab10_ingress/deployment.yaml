@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-dashboard
+  namespace: admin-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin-dashboard
+  template:
+    metadata:
+      labels:
+        app: admin-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: nginx:alpine
+        # Имитация административного интерфейса (например, Nginx с кастомной страницей)
+        ports:
+        - containerPort: 80
