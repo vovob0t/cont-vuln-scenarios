@@ -1,0 +1,22 @@
+# В данном манифесте создаётся Deployment, который использует образ с потенциальным бэкдором:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake-nginx
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fake-nginx
+  template:
+    metadata:
+      labels:
+        app: fake-nginx
+    spec:
+      containers:
+      - name: web
+        image: vulhub/nginx-backdoor
+        ports:
+        - containerPort: 80
+

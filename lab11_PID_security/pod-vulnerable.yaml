@@ -1,0 +1,16 @@
+# В этом манифесте под запускается с параметрами, позволяющими доступ к процессам хоста, а также с привилегированным режимом
+apiVersion: v1
+kind: Pod
+metadata:
+  name: monitoring-root
+  namespace: default
+  labels:
+    app: monitoring
+spec:
+  hostPID: true
+  containers:
+  - name: monitor
+    image: alpine:3.16
+    securityContext:
+      privileged: true
+    command: ["sh", "-c", "sleep 3600"]

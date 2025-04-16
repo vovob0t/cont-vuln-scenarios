@@ -1,0 +1,34 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sallowedrepos
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sAllowedRepos
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sallowedrepos
+
+        violation[{"msg": msg, "details": {}}] {
+          container := input.review.object.spec.containers[_]
+          image := container.image
+          not allowed(image)
+          msg := sprintf("Изображение '%s' не находится в списке разрешённых", [image])
+        }
+
+        allowed(image) {
+          endswith(image, ":latest")  # пример правила, можно усложнить проверку
+          image_matches(image, "myregistry.company.com/")
+        }
+
+        allowed(image) {
+          image_matches(image, "gcr.io/trusted/")
+        }
+
+        image_matches(image, prefix) {
+          startswith(image, prefix)
+        }
+
