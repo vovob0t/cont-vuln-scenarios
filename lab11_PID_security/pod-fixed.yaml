@@ -11,5 +11,6 @@ spec:
     image: alpine:3.16
     securityContext:
       runAsNonRoot: true
+      runAsUser: 1000
       allowPrivilegeEscalation: false
     command: ["sh", "-c", "sleep 3600"]

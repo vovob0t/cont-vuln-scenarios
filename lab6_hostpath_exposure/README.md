@@ -33,12 +33,20 @@ version: "3.8"
 services:
   app:
     build: .
-    # Монтируем директорию в режиме read-only, чтобы данные нельзя было изменить или прочитать злоумышленнику из контейнера, если доступ ограничен
+    # Монтирование локальной директории с конфиденциальными данными в контейнер без ограничений
+    # volumes:
+    #   - "./sensitive:/app/sensitive"
     volumes:
       - type: bind
-        source: "./sensitive"
-        target: "/app/sensitive"
-        read_only: true
+        source: ./sensitive
+        target: /app/sensitive
+        read_only: true  # теперь только чтение
+    networks:
+      - safe_net
+
+networks:
+  safe_net:
+    driver: bridge
 ```
 
 - Пересоберите и перезапустите:

@@ -9,6 +9,7 @@
 
 ```sh
 minikube start
+minikube addons enable ingress
 ```
 
 2. Создайте namespace:

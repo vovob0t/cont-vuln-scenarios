@@ -4,7 +4,7 @@ metadata:
   name: api-app
   namespace: app-namespace
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: api-app
@@ -13,6 +13,7 @@ spec:
       labels:
         app: api-app
     spec:
+      restartPolicy: Always
       # Используем дефолтный ServiceAccount, который позже получит избыточные права
       serviceAccountName: default
       containers:
