@@ -6,7 +6,7 @@
 ### Запуск
 - Сборка
 ```sh
-docker-compose up --build
+docker-compose up --build -d
 ```
 - После запуска войдите в контейнер::
 ```
@@ -33,9 +33,6 @@ version: "3.8"
 services:
   app:
     build: .
-    # Монтирование локальной директории с конфиденциальными данными в контейнер без ограничений
-    # volumes:
-    #   - "./sensitive:/app/sensitive"
     volumes:
       - type: bind
         source: ./sensitive
@@ -51,6 +48,6 @@ networks:
 
 - Пересоберите и перезапустите:
 ```sh
-docker-compose up --build
+docker-compose up --build -d
 ```
 Теперь внутри контейнера данные доступны только для чтения. Дополнительно рекомендуется хранить секреты в переменных окружения или использовать Docker Secrets.

@@ -28,7 +28,7 @@ services:
       context: ./target
     container_name: target
     networks:
-      target_net:
+      - target_net
     ports:
       - "4000:4000"
 
@@ -36,9 +36,10 @@ services:
     build:
       context: ./attacker
     container_name: attacker
+    depends_on:
+    - target
     networks:
       - attacker_net
-      - target_net
 
 networks:
   target_net:
@@ -46,5 +47,4 @@ networks:
   attacker_net:
     driver: bridge
 ```
-В данном варианте attacker подключается к двум сетям. Чтобы ограничить доступ, можно убрать подключение attacker к сети target_net, или наоборот, настроить правила межсетевого экранирования (firewall) на уровне Docker (через network policies, если используется Docker Enterprise или Kubernetes).
-После изменений убедитесь, что attacker не может получить данные из target (например, изменив правила или полностью разъединив их в разные сети).
+После изменений убедитесь, что attacker не может получить данные из target.

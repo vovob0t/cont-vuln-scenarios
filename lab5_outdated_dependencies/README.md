@@ -6,10 +6,10 @@
 ### Запуск
 - Сборка
 ```sh
-docker build -t outdated-app:fixed .
+docker build -t outdated-app:v1 .
 ```
 - Проверьте уязвимости:
-```
+```sh
 trivy image outdated-app:v1
 ```
 

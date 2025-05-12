@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  app-go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app-go:latest
+    ports:
+      - '8080:8080'
+
+  scanner:
+    image: aquasec/trivy:latest
+    depends_on:
+      - app-go
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    entrypoint: ["sh","-c"]
+    command:
+      ["echo 'Scanning app-go…' && trivy image --exit-code 1 --severity HIGH,CRITICAL app-go:latest"]
+
+  code-scan:
+    image: golangci/golangci-lint:v1.52.2
+    depends_on:
+      - app-go
+    volumes:
+      - ./:/app
+    working_dir: /app
+    entrypoint: ["golangci-lint", "run", "--timeout", "2m", "./..."]

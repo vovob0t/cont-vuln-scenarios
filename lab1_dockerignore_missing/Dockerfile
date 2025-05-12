@@ -2,6 +2,6 @@
 FROM python:3.9-slim
 WORKDIR /app
 # Копируются все файлы из контекста сборки, включая .env, references и прочее
-COPY . /app
+COPY . .
 RUN pip install flask
-CMD ["python", "app.py"]
+CMD ["python", "app/app.py"]

@@ -1,3 +1,5 @@
+## Сценарий 4: Секреты в Kubernetes  
+
 # История
 Этот сценарий переносит нас в мир Kubernetes и демонстрирует, как ошибки в политиках безопасности и конфигурации кластеров могут привести к компрометации секретных данных и эскалации привилегий. Легенда: приложение состоит из нескольких микросервисов, работающих в Kubernetes. Администратор заметил, что кто-то получил доступ к секрету Kubernetes (например, паролю к базе данных, хранящемуся в объекте Secret) и, возможно, использовал его для несанкционированного доступа к базе. Подозрение пало на один из подов приложения, у которого, как выяснилось, были избыточные права в кластере. Задача – расследовать, как секрет мог быть перехвачен, обнаружить ошибочные настройки (например, чрезмерные права Service Account, неправильное разделение доступа), и устранить их, не нарушив работу приложения.
 
@@ -78,7 +80,7 @@ kubectl auth can-i get secrets --as=system:serviceaccount:app-namespace:default 
 # Как устранить уязвимость
 - Шаг 1: Удалить опасную привязку
 ```sh
-kubectl delete clusterrolebinding default-sa-privileged
+kubectl delete ClusterRoleBinding default-sa-privileged
 ```
 
 - Шаг 2: Создать ограниченный ServiceAccount
@@ -88,8 +90,8 @@ File name: serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-name: api-sa
-namespace: app-namespace
+  name: api-sa
+  namespace: app-namespace
 ```
 Применить:
 ```sh

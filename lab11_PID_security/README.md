@@ -9,7 +9,7 @@ minikube start
 ```
 - Далее необходимо применить манифест уязвимого пода
 ```sh
-kubectl apply -f lab11_podsecuritycontext/pod-vulnerable.yaml
+kubectl apply -f pod-vulnerable.yaml
 ```
 
 - Проверить статус пода:
@@ -48,7 +48,7 @@ kubectl delete pod monitoring-root
 
 - Применить исправленный манифест:
 ```sh
-kubectl apply -f lab11_podsecuritycontext/pod-fixed.yaml
+kubectl apply -f pod-fixed.yaml
 ```
 
 - Проверить статус нового пода:

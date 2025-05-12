@@ -14,22 +14,22 @@ minikube addons enable ingress
 
 2. Создайте namespace:
 ```sh
-kubectl apply -f lab10_ingress/namespace.yaml
+kubectl apply -f namespace.yaml
 ```
 
 3. Примените Deployment:
 ```sh
-kubectl apply -f lab10_ingress/deployment.yaml
+kubectl apply -f deployment.yaml
 ```
 
 4. Примените Service:
 ```sh
-kubectl apply -f lab10_ingress/service.yaml
+kubectl apply -f service.yaml
 ```
 
 5. Примените уязвимый Ingress:
 ```sh
-kubectl apply -f lab10_ingress/ingress-vulnerable.yaml
+kubectl apply -f ingress-vulnerable.yaml
 ```
 
 6. Проверьте ресурсы:
@@ -60,12 +60,12 @@ kubectl get ingress -n admin-ns
 
 1. Удалите уязвимый Ingress:
 ```sh
-kubectl delete -f lab10_ingress/ingress-vulnerable.yaml -n admin-ns
+kubectl delete -f ingress-vulnerable.yaml -n admin-ns
 ```
 
 2. Примените исправленный Ingress:
 ```sh
-kubectl apply -f lab10_ingress/ingress-fixed.yaml -n admin-ns
+kubectl apply -f ingress-fixed.yaml -n admin-ns
 ```
 
 3. Проверьте ресурс:

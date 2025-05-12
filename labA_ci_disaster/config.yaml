@@ -1,0 +1,3 @@
+# Секреты приложения, случайно попавшие в образ
+jwt_secret: SuperSecretJWTKey
+db_password: P@ssw0rd!

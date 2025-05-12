@@ -5,7 +5,9 @@ metadata:
   namespace: admin-ns
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx                       # новый способ (v1.22+)
   rules:
   - host: admin.example.com
     http:

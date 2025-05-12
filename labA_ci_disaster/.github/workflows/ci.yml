@@ -1,0 +1,24 @@
+name: CI Pipeline
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        docker build -t ${{ github.repository }}:vuln -f Dockerfile .
+
+    - name: Run unit tests
+      run: go test ./...
+
+    - name: Code analysis (gosec)
+      run: golangci-lint run || echo "gosec found issues, but ignoring..."
+
+    - name: Docker image scan (Trivy)
+      run: |
+        docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro \
+          aquasec/trivy:latest image --exit-code 1 --severity HIGH,CRITICAL ${{ github.repository }}:vuln || echo "Trivy found vulnerabilities, but ignoring..."

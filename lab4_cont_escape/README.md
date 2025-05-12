@@ -5,7 +5,7 @@
 ### Запуск
 - Сборка и запуск
 ```sh
-docker-compose up -d
+docker-compose up -d --build
 ```
 - Войдите внутрь запущенного контейнера:
 ```

@@ -20,7 +20,15 @@ spec:
       - name: api-container
         image: python:3.9-slim
         # Простая команда, которая выводит пароль из секрета (подставляется через ENV)
-        command: ["python", "-c", "import os; print('DB_PASS:', os.environ.get('DB_PASS', 'Not Set')); import time; time.sleep(3600)"]
+        # command: ["python", "-c", "import os; print('DB_PASS:', os.environ.get('DB_PASS', 'Not Set')); import time; time.sleep(3600)"]
+        command:
+        - sh
+        - -c
+        - |
+          apt update >> /dev/null && apt install -y curl jq >> /dev/null
+          echo "The evnironment variable DB_PASS is " $HOSTNAME
+          echo "Container ready. Sleeping 1h"; sleep 3600
+
         env:
         - name: DB_PASS
           valueFrom:

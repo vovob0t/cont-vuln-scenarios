@@ -2,4 +2,4 @@
 FROM node:14-slim
 WORKDIR /app
 COPY attacker.js /app/attacker.js
-CMD ["node", "attacker.js"]
+CMD sh -c "sleep 2 && exec node attacker.js"
