@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  log-srvc:
+    build: .
+    image: log:latest
+    privileged: true
+    ports:
+      - "4000:4000"
+    volumes:
+      - "./host_logs:/logs"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - APP_SECRET=SuperSecret123
