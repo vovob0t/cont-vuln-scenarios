@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: commission
+  namespace: finance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commission
+  template:
+    metadata:
+      labels:
+        app: commission
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: commission
+        image: ubuntu:20.04
+        command:
+          - sh
+          - -c
+          - |
+            apt-get update && apt-get install -y curl jq docker.io && sleep infinity
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: hostroot
+          mountPath: /host-root
+        - name: dockersock
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: hostroot
+        hostPath:
+          path: /
+          type: Directory
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket

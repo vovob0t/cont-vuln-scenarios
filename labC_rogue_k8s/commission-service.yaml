@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: commission-svc
+  namespace: finance
+spec:
+  selector:
+    app: commission
+  ports:
+    - port: 8080
+      targetPort: 80

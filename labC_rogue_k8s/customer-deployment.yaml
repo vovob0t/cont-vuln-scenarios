@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer
+  namespace: finance
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      containers:
+      - name: customer
+        image: hashicorp/http-echo
+        args:
+          - "-text=CUSTOMER_DATA: confidential"
+        ports:
+          - containerPort: 5678

@@ -124,3 +124,11 @@ app.get('/secret', (req, res) => {
 
 app.listen(4000, () => console.log('LogMonster listening on 4000'));
 ```
+
+## Итог
+
+В этом сценарии вы отработали:
+
+- Как ошибки в docker-compose.yml (privileged, hostPath, отсутствие limits) приводят к утечкам и DoS,
+- Как небезопасный логгер может раскрыть секреты,
+- Какие простые изменения (non-root user, read-only mount, resource limits, фильтрация env) закрывают эти риски.
