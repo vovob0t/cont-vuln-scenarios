@@ -55,6 +55,7 @@ curl -sSk \
 - Получить конкретный:
 
 ```sh
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
 curl -sSk \
     -H "Authorization: Bearer $TOKEN" \
     https://kubernetes.default.svc/api/v1/namespaces/app-namespace/secrets/db-secret \
